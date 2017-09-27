@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ciach.mortgagecalculator.MainActivity"
+    tools:layout_column="2"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <EditText
+        android:id="@+id/purchasePriceEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="9dp"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:inputType="numberDecimal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/purchasePriceTextView"
+        app:layout_constraintLeft_toRightOf="@+id/purchasePriceTextView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/purchasePriceTextView"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/purchasePriceTextView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:hint="@string/enter_amount"
+        android:text="Purchase Price"
+        android:textAlignment="viewStart"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/downPaymentTextView"
+        android:layout_marginTop="49dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/downPaymentTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/downPaymentEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="13dp"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:inputType="numberDecimal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/downPaymentTextView"
+        app:layout_constraintLeft_toRightOf="@+id/downPaymentTextView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/downPaymentTextView"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/downPaymentTextView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="79dp"
+        android:layout_marginTop="77dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Down Payment"
+        app:layout_constraintBottom_toBottomOf="@+id/interestRateEditText"
+        app:layout_constraintLeft_toLeftOf="@+id/interestRateTextView"
+        app:layout_constraintRight_toRightOf="@+id/interestRateTextView"
+        app:layout_constraintTop_toTopOf="@+id/purchasePriceTextView"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <EditText
+        android:id="@+id/interestRateEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginStart="1dp"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:inputType="numberDecimal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loanDurationSeekBar"
+        app:layout_constraintLeft_toLeftOf="@+id/purchasePriceEditText"
+        app:layout_constraintRight_toRightOf="@+id/loanDurationSeekBar"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <TextView
+        android:id="@+id/interestRateTextView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="31dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Interest Rate"
+        app:layout_constraintLeft_toLeftOf="@+id/loanDurationTextView"
+        app:layout_constraintRight_toRightOf="@+id/loanDurationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/downPaymentTextView"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/loanDurationTextView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="23dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Loan Duration"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/monthlyPaymentEditText"
+        app:layout_constraintTop_toBottomOf="@+id/interestRateTextView"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <SeekBar
+        android:id="@+id/loanDurationSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/loanDurationTextView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintVertical_bias="0.508" />
+
+    <TextView
+        android:id="@+id/monthlyPaymentTextView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Monthly Payment"
+        app:layout_constraintLeft_toLeftOf="@+id/loanDurationTextView"
+        app:layout_constraintRight_toRightOf="@+id/loanDurationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/loanDurationTextView"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <EditText
+        android:id="@+id/monthlyPaymentEditText"
+        android:layout_width="275dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/monthlyPaymentTextView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/monthlyPaymentTextView"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginRight="16dp"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>
