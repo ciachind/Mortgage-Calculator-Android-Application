@@ -2,7 +2,14 @@ package com.example.ciach.mortgagecalculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import java.text.NumberFormat;
+import static android.R.id.progress;
 
 
 public class MainActivity extends AppCompatActivity
@@ -15,8 +22,13 @@ public class MainActivity extends AppCompatActivity
     private double purchasePrice = 0.0; //purchase amount entered by user
     private double downPayment = 0.0; // down payment entered by user
     private double interestRate = 0.0; // interest rate entered by user
-    private double loanDuration = 30.0; // initial length of loan in years
-    private double monthlyPayment = 0.0; // configured monthly payment
+    private double loanDuration = 15.0; // initial length of loan in years
+    private double monthlyPayment = 0.0; // initial monthly payment
+    private TextView purchasePriceTextView;
+    private TextView downPaymentTextView;
+    private TextView interestRateTextView;
+    private TextView loanDurationTextView;
+    private TextView monthlyPaymentTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,10 +39,10 @@ public class MainActivity extends AppCompatActivity
         // get references to programmatically manipulated TextViews
         purchasePriceTextView = (TextView) findViewById(R.id.purchasePriceTextView);
         downPaymentTextView = (TextView) findViewById(R.id.downPaymentTextView);
-        interestRateTextView = (TextView) findViewByID(R.id.interestRateTextView);
-        monthlyPaymentTextView = (TextView) findViewByID(R.id.monthlyPaymentTextView);
-        loanDurationView.setText(currencyFormat.format(0));
-        monthlyPaymentView.setText(currencyFormat.format(0));
+        loanDurationTextView = (TextView) findViewById(R.id.loanDurationTextView);
+        interestRateTextView = (TextView) findViewById(R.id.interestRateTextView);
+        monthlyPaymentTextView = (TextView) findViewById(R.id.monthlyPaymentTextView);
+        monthlyPaymentTextView.setText(currencyFormat.format(0));
 
         // set purchasePriceEditText's Text Watcher
         EditText purchasePriceEditText =
@@ -38,24 +50,80 @@ public class MainActivity extends AppCompatActivity
         purchasePriceEditText.addTextChangedListener(purchasePriceEditTextWatcher);
 
         // set loanDurationSeekBar's OnSeekBarChangeListener
-        SeekBar loanDurationSeekBar = (SeekBar) findViewById(R.id.percentSeekBar);
+        SeekBar loanDurationSeekBar = (SeekBar) findViewById(R.id.loanDurationSeekBar);
         loanDurationSeekBar.setOnSeekBarChangeListener(seekBarListener);
+    }
 
-        //calculate and display monthly payment amount
+    private void findViewById(TextView monthlyPaymentTextView) {
+    }
+    //calculate and display monthly payment amount
 
     private void calculate()
         {
-            // format loan duration amount and display in loanDurationTextView
-            loanDurationTextView.setText(numberFormat.format(number));
 
             // calculate the monthly payment
             double monthlyPayment = ((purchasePrice - downPayment) * (interestRate)/(loanDuration));
 
             // display monthlyPayment
-            loanDurationTextView.setText(currencyFormat.format(tip));
-            monthlyPaymentTextView.setText(currencyFormat.format(format(monthlyPayme)));
+            monthlyPaymentTextView.setText(currencyFormat.format(monthlyPayment));
+
 
         }
-    }
+
+        // listener object for the SeekBar's progress changed events
+    private final SeekBar.OnSeekBarChangeListener seekBarListener =
+                new SeekBar.OnSeekBarChangeListener()
+                {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b)
+                    {
+                        loanDuration = progress / 30.0 ;
+                        calculate();
+
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar)
+                    {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar)
+                    {
+
+                    }
+                };
+
+                // listener object for the EditText's text changed events
+    private final TextWatcher purchasePriceEditTextWatcher = new TextWatcher()
+                {
+                    // called when user changes purchasePrice
+                    @Override
+                    public void onTextChanged(CharSequence s, int start,
+                                              int before, int count)
+                    {
+                        try { // get amount and display currency formatted value
+                            purchasePrice = Double.parseDouble(s.toString()) / 100.0;
+                            purchasePriceTextView.setText(currencyFormat.format(monthlyPayment));
+
+                        } catch (NumberFormatException e) { //if s is empty or non-numeric
+                            purchasePriceTextView.setText("");
+                            purchasePrice = 0.0;
+                        }
+
+                        calculate(); // update the Text Views
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+
+                    @Override
+                    public void beforeTextChanged(
+                            CharSequence s, int start, int count, int after) {}
+
+
+
+                };
+
 
 }

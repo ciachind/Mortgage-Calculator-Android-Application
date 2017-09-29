@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MortgageCalculator</string>
     <string name="enter_amount">Enter Purchase Price</string>
+    <string name="enter_homePrice">Home Price</string>
+    <string name="loan_duration">30</string>
+    <string name="down_Payment">Down Payment</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="monthly_payment" translatable="false">Monthly Payment</string>
 </resources>
