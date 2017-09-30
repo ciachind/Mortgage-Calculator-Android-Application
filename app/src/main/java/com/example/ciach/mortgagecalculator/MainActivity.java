@@ -8,8 +8,12 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.NumberFormat;
 import static android.R.id.progress;
+import static java.text.Format.*;
 
 
 public class MainActivity extends AppCompatActivity
@@ -22,7 +26,7 @@ public class MainActivity extends AppCompatActivity
     private double purchasePrice = 0.0; //purchase amount entered by user
     private double downPayment = 0.0; // down payment entered by user
     private double interestRate = 0.0; // interest rate entered by user
-    private double loanDuration = 15.0; // initial length of loan in years
+    private int loanDuration = 15; // initial length of loan in years
     private double monthlyPayment = 0.0; // initial monthly payment
     private TextView purchasePriceTextView;
     private TextView downPaymentTextView;
@@ -54,15 +58,16 @@ public class MainActivity extends AppCompatActivity
         loanDurationSeekBar.setOnSeekBarChangeListener(seekBarListener);
     }
 
-    private void findViewById(TextView monthlyPaymentTextView) {
-    }
     //calculate and display monthly payment amount
 
     private void calculate()
         {
+            // format duration and display in loanDurationTextView
+            loanDurationTextView.setText(Integer.toString(loanDuration));
 
             // calculate the monthly payment
-            double monthlyPayment = ((purchasePrice - downPayment) * (interestRate)/(loanDuration));
+            double monthlyPayment = ((purchasePrice - downPayment) *
+                    (interestRate)/(loanDuration));
 
             // display monthlyPayment
             monthlyPaymentTextView.setText(currencyFormat.format(monthlyPayment));
@@ -75,10 +80,11 @@ public class MainActivity extends AppCompatActivity
                 new SeekBar.OnSeekBarChangeListener()
                 {
                     @Override
-                    public void onProgressChanged(SeekBar seekBar, int i, boolean b)
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean
+                                                  fromUser)
                     {
-                        loanDuration = progress / 30.0 ;
-                        calculate();
+                        loanDuration = progress / 30; // set loanDuration based on progress
+                        calculate(); // calculate and display loanDuration and monthlyPayment
 
                     }
 
