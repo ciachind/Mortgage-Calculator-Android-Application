@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     private double downPayment = 0.0; // down payment entered by user
     private double interestRate = 0.0; // interest rate entered by user
     private int loanDuration = 15; // initial length of loan in years
-    private double monthlyPayment = 0.0; // initial monthly payment
     private TextView purchasePriceTextView;
     private TextView downPaymentTextView;
     private TextView interestRateTextView;
@@ -46,14 +45,21 @@ public class MainActivity extends AppCompatActivity
         loanDurationTextView = (TextView) findViewById(R.id.loanDurationTextView);
         interestRateTextView = (TextView) findViewById(R.id.interestRateTextView);
         monthlyPaymentTextView = (TextView) findViewById(R.id.monthlyPaymentTextView);
-        monthlyPaymentTextView.setText(currencyFormat.format(0));
+        loanDurationTextView.setText(Integer.toString(0));
+
+
 
         // set purchasePriceEditText's Text Watcher
         EditText purchasePriceEditText =
                 (EditText) findViewById(R.id.purchasePriceEditText);
         purchasePriceEditText.addTextChangedListener(purchasePriceEditTextWatcher);
 
-        // set loanDurationSeekBar's OnSeekBarChangeListener
+        // set downPaymentEditText's Text Watcher
+        EditText downPaymentEditText =
+                (EditText) findViewById(R.id.downPaymentEditText);
+        downPaymentEditText.addTextChangedListener(downPaymentEditTextWatcher);
+
+         // set loanDurationSeekBar's OnSeekBarChangeListener
         SeekBar loanDurationSeekBar = (SeekBar) findViewById(R.id.loanDurationSeekBar);
         loanDurationSeekBar.setOnSeekBarChangeListener(seekBarListener);
     }
@@ -66,24 +72,22 @@ public class MainActivity extends AppCompatActivity
             loanDurationTextView.setText(Integer.toString(loanDuration));
 
             // calculate the monthly payment
-            double monthlyPayment = ((purchasePrice - downPayment) *
-                    (interestRate)/(loanDuration));
+            double monthlyPayment = purchasePrice - downPayment * (interestRate/100) / (loanDuration * 12);
 
-            // display monthlyPayment
+            // display monthlyPayment and loanDuration
             monthlyPaymentTextView.setText(currencyFormat.format(monthlyPayment));
 
 
         }
 
         // listener object for the SeekBar's progress changed events
-    private final SeekBar.OnSeekBarChangeListener seekBarListener =
-                new SeekBar.OnSeekBarChangeListener()
+    private final OnSeekBarChangeListener seekBarListener =
+                new OnSeekBarChangeListener()
                 {
                     @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean
-                                                  fromUser)
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
                     {
-                        loanDuration = progress / 30; // set loanDuration based on progress
+                        loanDuration = progress; // set loanDuration based on progress
                         calculate(); // calculate and display loanDuration and monthlyPayment
 
                     }
@@ -111,9 +115,10 @@ public class MainActivity extends AppCompatActivity
                     {
                         try { // get amount and display currency formatted value
                             purchasePrice = Double.parseDouble(s.toString()) / 100.0;
-                            purchasePriceTextView.setText(currencyFormat.format(monthlyPayment));
+                            purchasePriceTextView.setText(currencyFormat.format(purchasePrice));
 
-                        } catch (NumberFormatException e) { //if s is empty or non-numeric
+                        } catch (NumberFormatException e)
+                        { //if s is empty or non-numeric
                             purchasePriceTextView.setText("");
                             purchasePrice = 0.0;
                         }
@@ -121,15 +126,57 @@ public class MainActivity extends AppCompatActivity
                         calculate(); // update the Text Views
                     }
                     @Override
-                    public void afterTextChanged(Editable s) {}
+                    public void afterTextChanged(Editable s)
+                    {
+
+                    }
 
                     @Override
                     public void beforeTextChanged(
-                            CharSequence s, int start, int count, int after) {}
+                            CharSequence s, int start, int count, int after)
+                    {
+
+                    }
 
 
 
                 };
+    // listener object for the EditText's text changed events
+    private final TextWatcher downPaymentEditTextWatcher = new TextWatcher()
+    {
+        // called when user changes purchasePrice
+        @Override
+        public void onTextChanged(CharSequence s, int start,
+                                  int before, int count)
+        {
+            try { // get amount and display currency formatted value
+                downPayment = Double.parseDouble(s.toString()) / 100.0;
+                downPaymentTextView.setText(currencyFormat.format(downPayment));
+
+            } catch (NumberFormatException e)
+            { //if s is empty or non-numeric
+                downPaymentTextView.setText("");
+                downPayment = 0.0;
+            }
+
+            calculate(); // update the Text Views
+        }
+        @Override
+        public void afterTextChanged(Editable s)
+        {
+
+        }
+
+        @Override
+        public void beforeTextChanged(
+                CharSequence s, int start, int count, int after)
+        {
+
+        }
+
+
+
+    };
 
 
 }
