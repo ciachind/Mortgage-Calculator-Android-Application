@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
+import java.math.*;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -54,11 +54,6 @@ public class MainActivity extends AppCompatActivity
                 (EditText) findViewById(R.id.purchasePriceEditText);
         purchasePriceEditText.addTextChangedListener(purchasePriceEditTextWatcher);
 
-        // set downPaymentEditText's Text Watcher
-        EditText downPaymentEditText =
-                (EditText) findViewById(R.id.downPaymentEditText);
-        downPaymentEditText.addTextChangedListener(downPaymentEditTextWatcher);
-
          // set loanDurationSeekBar's OnSeekBarChangeListener
         SeekBar loanDurationSeekBar = (SeekBar) findViewById(R.id.loanDurationSeekBar);
         loanDurationSeekBar.setOnSeekBarChangeListener(seekBarListener);
@@ -71,10 +66,17 @@ public class MainActivity extends AppCompatActivity
             // format duration and display in loanDurationTextView
             loanDurationTextView.setText(Integer.toString(loanDuration));
 
-            // calculate the monthly payment
-            double monthlyPayment = purchasePrice - downPayment * (interestRate/100) / (loanDuration * 12);
+            interestRate /= 100.0;
 
-            // display monthlyPayment and loanDuration
+            double loanAmount = purchasePrice - downPayment;
+
+            int termInMonths = loanDuration * 12;
+
+            // calculate the monthly payment
+
+            double monthlyPayment = (loanAmount / termInMonths) * (interestRate/100);
+
+            // display monthlyPayment
             monthlyPaymentTextView.setText(currencyFormat.format(monthlyPayment));
 
 
@@ -141,42 +143,6 @@ public class MainActivity extends AppCompatActivity
 
 
                 };
-    // listener object for the EditText's text changed events
-    private final TextWatcher downPaymentEditTextWatcher = new TextWatcher()
-    {
-        // called when user changes purchasePrice
-        @Override
-        public void onTextChanged(CharSequence s, int start,
-                                  int before, int count)
-        {
-            try { // get amount and display currency formatted value
-                downPayment = Double.parseDouble(s.toString()) / 100.0;
-                downPaymentTextView.setText(currencyFormat.format(downPayment));
-
-            } catch (NumberFormatException e)
-            { //if s is empty or non-numeric
-                downPaymentTextView.setText("");
-                downPayment = 0.0;
-            }
-
-            calculate(); // update the Text Views
-        }
-        @Override
-        public void afterTextChanged(Editable s)
-        {
-
-        }
-
-        @Override
-        public void beforeTextChanged(
-                CharSequence s, int start, int count, int after)
-        {
-
-        }
-
-
-
-    };
 
 
 }
