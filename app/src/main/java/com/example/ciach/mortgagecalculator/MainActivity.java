@@ -72,9 +72,11 @@ public class MainActivity extends AppCompatActivity
 
             int termInMonths = loanDuration * 12;
 
+            double monthlyAmount = (loanAmount / termInMonths);
+
             // calculate the monthly payment
 
-            double monthlyPayment = (loanAmount / termInMonths) * (interestRate/100);
+            double monthlyPayment = monthlyAmount * (interestRate/100);
 
             // display monthlyPayment
             monthlyPaymentTextView.setText(currencyFormat.format(monthlyPayment));
