@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
             // calculate the monthly payment
 
-            double monthlyPayment = monthlyAmount * (interestRate/100);
+            double monthlyPayment = monthlyAmount + (monthlyAmount * (interestRate/100));
 
             // display monthlyPayment
             monthlyPaymentTextView.setText(currencyFormat.format(monthlyPayment));
